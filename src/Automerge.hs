@@ -145,14 +145,14 @@ parseAutomergeSpans :: BL.ByteString -> Either String [AutomergeSpan]
 parseAutomergeSpans = eitherDecode
 
 instance ToJSON AutomergeSpan where
-  toJSON (BlockSpan blockMarker _) = case blockMarker of
+  toJSON (BlockSpan blockMarker parents) = case blockMarker of
     ParagraphMarker ->
       object
         [ "type" .= T.pack "block",
           "value"
             .= object
               [ "isEmbed" .= Bool False,
-                "parents" .= ([] :: [T.Text]),
+                "parents" .= parents,
                 "type" .= T.pack "paragraph",
                 "attrs" .= (KM.empty :: KM.KeyMap T.Text)
               ]
@@ -163,7 +163,7 @@ instance ToJSON AutomergeSpan where
           "value"
             .= object
               [ "isEmbed" .= Bool False,
-                "parents" .= ([] :: [T.Text]),
+                "parents" .= parents,
                 "type" .= T.pack "heading",
                 "attrs" .= object ["level" .= level]
               ]
@@ -174,7 +174,7 @@ instance ToJSON AutomergeSpan where
           "value"
             .= object
               [ "isEmbed" .= Bool False,
-                "parents" .= ([] :: [T.Text]),
+                "parents" .= parents,
                 "type" .= T.pack "code-block",
                 "attrs" .= (KM.empty :: KM.KeyMap T.Text)
               ]
@@ -196,7 +196,7 @@ instance ToJSON AutomergeSpan where
           "value"
             .= object
               [ "isEmbed" .= Bool True,
-                "parents" .= ([] :: [T.Text]),
+                "parents" .= parents,
                 "type" .= T.pack "ordered-list-item",
                 "attrs" .= (KM.empty :: KM.KeyMap T.Text)
               ]
@@ -207,7 +207,7 @@ instance ToJSON AutomergeSpan where
           "value"
             .= object
               [ "isEmbed" .= Bool False,
-                "parents" .= ([] :: [T.Text]),
+                "parents" .= parents,
                 "type" .= T.pack "unordered-list-item",
                 "attrs" .= (KM.empty :: KM.KeyMap T.Text)
               ]
@@ -218,7 +218,7 @@ instance ToJSON AutomergeSpan where
           "value"
             .= object
               [ "isEmbed" .= Bool False,
-                "parents" .= ([] :: [T.Text]),
+                "parents" .= parents,
                 "type" .= T.pack "image",
                 "attrs" .= (KM.empty :: KM.KeyMap T.Text)
               ]
