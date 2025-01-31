@@ -1,7 +1,7 @@
 {-# LANGUAGE InstanceSigs #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Automerge (parseAutomergeSpans, AutomergeSpan (..), BlockMarker (..), Heading (..), HeadingLevel (..), TextSpan (..), Mark (..), Link (..), toJSONText) where
+module Automerge (parseAutomergeSpans, AutomergeSpan (..), BlockMarker (..), BlockType (..), Heading (..), HeadingLevel (..), TextSpan (..), Mark (..), Link (..), toJSONText) where
 
 import Data.Aeson (FromJSON (parseJSON), Object, ToJSON (toJSON), Value (Bool, String), eitherDecode, encode, object, withObject, withScientific, withText, (.!=), (.:), (.:?), (.=))
 import qualified Data.Aeson.Key as K
